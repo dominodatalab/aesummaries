@@ -11,23 +11,28 @@ data_processing<-function(datain,
                           obs_period,
                           obs_residual=NULL){
   
+  cat(file=stderr(), "data filter:", data_filter)
   print(data_filter)
   # Reading data
   if (data_source=="Local"){
-  if (is.null(datain)) return()
-  if(file_ext(datain)[1]=="csv"){
-    dsin<-read.csv(datain$datapath)
-  }
-  if(file_ext(datain)[1]=="sas7bdat"){
-    dsin<-read_sas(datain$datapath)
-  }
-  }
-  if(file_ext(datain)[1]=="xpt"){
-    dsin<-read_xpt(datain$datapath)
-  }
+    if (is.na(datain)) return()
+    if(file_ext(datain)[1]=="csv"){
+      dsin<-read.csv(datain$datapath)
+    }
+    if(file_ext(datain)[1]=="sas7bdat"){
+      dsin<-read_sas(datain$datapath)
+    }
+    if(file_ext(datain)[1]=="xpt"){
+      dsin<-read_xpt(datain$datapath)
+    }
+  } #end if local
+  
+  # Server only suports sas7bdat files so just read it in!
   if (data_source=="Server"){
     dsin <-read_sas(paste0(server_path))
   }
+  
+  
   # processing data
   names(dsin) <- toupper(names(dsin))
   
