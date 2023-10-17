@@ -58,7 +58,7 @@ proc sgplot data=ae_freq;
 run;
 
 /* Write the chart to a PDF */
-ods pdf file="/mnt/artifacts/results/AE_Frequency.pdf";
+ods pdf file="/mnt/artifacts/results/pooled_AE.pdf";
 title "Frequency of Adverse Events";
 proc sgplot data=ae_freq;
     vbar AEDECOD / response=COUNT;
