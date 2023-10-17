@@ -7,11 +7,12 @@
 * ____________________________________________________________________________
 * DESCRIPTION 
 *
-* The purpose of this program is to convert the raw XPT data to SDTM.
+* The purpose of this program is to pool ADAE datasets from the CDISC01 and CDISC02 
+* studies into a single pooled ADAE dataset
 *                                                                   
 * Input files:
-* - /mnt/imported/data/ADAM/adae.sas7bdat
-* - /mnt/imported/data/ADAM_1/adae.sas7bdat
+* - /mnt/imported/data/ADAM/adae_shiny.sas7bdat
+* - /mnt/imported/data/ADAM_1/adae_shiny.sas7bdat
 *
 * Output files:                                                   
 * - /mnt/data/POOLEDADAM/adae.sas7bdat
@@ -28,7 +29,7 @@ libname out '/mnt/data/POOLEDADAM';
 
 /* Use DATA step to combine datasets */
 data out.adae;
-   set in1.adae in2.adae;
+   set in1.adae_shiny in2.adae_shiny;
 run;
 
 /* Close the libraries */
