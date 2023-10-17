@@ -36,3 +36,36 @@ run;
 libname in1 clear;
 libname in2 clear;
 libname out clear;
+
+/* Re-open the output library */
+libname out '/mnt/data/POOLEDADAM';
+
+/* Sort the data by AEDECOD for the PROC FREQ */
+proc sort data=out.adae; 
+    by AEDECOD; 
+run; 
+
+/* Get frequency count of AEDECOD */
+proc freq data=out.adae noprint; 
+    tables AEDECOD / out=ae_freq; 
+run;
+
+/* Create the bar chart */
+title "Frequency of Adverse Events";
+proc sgplot data=ae_freq;
+    vbar AEDECOD / response=COUNT;
+    xaxis display=none;  /* This line removes all labels from the x-axis */
+run;
+
+/* Write the chart to a PDF */
+ods pdf file="/mnt/artifacts/results/AE_Frequency.pdf";
+title "Frequency of Adverse Events";
+proc sgplot data=ae_freq;
+    vbar AEDECOD / response=COUNT;
+    xaxis display=none;  /* This line removes all labels from the x-axis */
+run;
+ods pdf close;
+
+/* Close the output library */
+libname out clear;
+
